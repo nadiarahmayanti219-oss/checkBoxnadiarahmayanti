@@ -1,143 +1,56 @@
-console.log("bismillah praktikum JavaScript DOM dimulai");
+// ambil elemen dari HTML
+const inputTask = document.getElementById("inputTask");
+const tombol = document.getElementById("tombol");
+const listContainer = document.getElementById("listContainer");
 
-// ===== AKTIVITAS 1: DOM SELECTION =====
+// hitung dan tampilkan statistik
+function updateStats() {
+const total = listContainer.children.length;
+const selesai = listContainer.getElementsByClassName("completed").length;
 
-// input dan tombol
-const inputTugas = document.getElementById("input-tugas");
-const btnTambah = document.getElementById("btn-tambah");
-
-// daftar tugas
-const daftarTugas = document.getElementById("daftar-tugas");
-
-// jumlah tugas
-const jumlahTugas = document.getElementById("jumlah-tugas");
-
-// pesan kosong
-const pesanKosong = document.getElementById("pesan-kosong");
-
-
-// ===== AKTIVITAS 2: VARIABEL JUMLAH TUGAS =====
-
-let totalTugas = 0;
-
-
-// ===== AKTIVITAS 3: UPDATE JUMLAH =====
-
-function perbaruiJumlah() {
-jumlahTugas.innerText = totalTugas;
-
-if (totalTugas === 0) {
-pesanKosong.classList.remove("hidden");
-} else {
-pesanKosong.classList.add("hidden");
-}
+document.getElementById("total").innerText = total;
+document.getElementById("selesai").innerText = selesai;
+document.getElementById("belum").innerText = total - selesai;
 }
 
+// tambah tugas baru
+function addTask() {
+const teks = inputTask.value.trim();
 
-// ===== AKTIVITAS 4: TAMBAH TUGAS =====
-
-function tambahTugas() {
-
-// mengambil isi input
-const isiTugas = inputTugas.value.trim();
-
-// mengecek input kosong
-if (isiTugas === "") {
+if (teks === "") {
 alert("Tugas tidak boleh kosong!");
 return;
 }
 
-// membuat elemen li baru
-const liBaru = document.createElement("li");
+const li = document.createElement("li");
+li.textContent = teks;
 
-// memberikan class
-liBaru.className = "todo-item";
+const hapus = document.createElement("span");
+hapus.textContent = "×";
+li.appendChild(hapus);
 
-// memasukkan isi tugas
-liBaru.innerHTML = `
-<label class="task-content">
-<input type="checkbox" class="checkbox-tugas">
-<span class="teks-tugas">${isiTugas}</span>
-</label>
-
-<button class="btn-hapus">×</button>
-`;
-
-
-// ===== CHECKBOX =====
-
-const checkboxTugas = liBaru.querySelector(".checkbox-tugas");
-
-checkboxTugas.addEventListener("change", function() {
-
-liBaru.classList.toggle("selesai");
-
-console.log("[DOM] Status tugas diubah.");
-
-});
-
-
-// ===== TOMBOL HAPUS =====
-
-const btnHapus = liBaru.querySelector(".btn-hapus");
-
-btnHapus.addEventListener("click", function() {
-
-liBaru.remove();
-
-totalTugas--;
-
-perbaruiJumlah();
-
-console.log("[DOM] Tugas dihapus.");
-
-});
-
-
-// ===== MENAMPILKAN TUGAS =====
-
-daftarTugas.appendChild(liBaru);
-
-inputTugas.value = "";
-
-inputTugas.focus();
-
-totalTugas++;
-
-perbaruiJumlah();
-
-console.log("[DOM] Tugas berhasil ditambahkan.");
-
+listContainer.appendChild(li);
+inputTask.value = "";
+inputTask.focus();
+updateStats();
 }
 
+// klik tombol tambah
+tombol.onclick = addTask;
 
-// ===== AKTIVITAS 5: TOMBOL TAMBAH =====
-
-btnTambah.addEventListener("click", function() {
-
-tambahTugas();
-
-// mengganti warna tombol
-btnTambah.classList.toggle("aktif");
-
-});
-
-
-// ===== AKTIVITAS 6: TOMBOL ENTER =====
-
-inputTugas.addEventListener("keyup", function(event) {
-
+// tekan Enter
+inputTask.onkeyup = function(event) {
 if (event.key === "Enter") {
-
-tambahTugas();
-
-btnTambah.classList.toggle("aktif");
-
+addTask();
 }
+};
 
-});
-
-
-// ===== KONDISI AWAL =====
-
-perbaruiJumlah();
+// klik tugas = selesai, klik × = hapus
+listContainer.onclick = function(event) {
+if (event.target.tagName === "SPAN") {
+event.target.parentElement.remove();
+} else {
+event.target.classList.toggle("completed");
+}
+updateStats();
+};

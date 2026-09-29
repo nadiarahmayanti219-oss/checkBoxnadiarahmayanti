@@ -3,72 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>My To Do List</title>
-
+<title>To Do List</title>
 <link rel="stylesheet" href="style.css">
-
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-
-<div class="lace lace-top"></div>
-
 <div class="container">
+<div class="todo">
 
-<header class="main-header">
+<h1>My To Do List 📋</h1>
 
-<div class="sticker">MY DAILY LIST</div>
-
-<h1>My To Do List</h1>
-
-<p>Catat kegiatan kamu hari ini</p>
-
-</header>
-
-
-<main class="todo-card">
-
-<div class="input-wrapper">
-
-<input type="text" id="input-tugas" placeholder="Tambahkan to do list">
-
-<button id="btn-tambah" class="btn-tambah">
-tambah
-</button>
-
+<div class="row">
+<input type="text" id="inputTask" placeholder="Tambahkan to do list">
+<button id="tombol">tambah</button>
 </div>
 
+<ul id="listContainer"></ul>
 
-<div class="list-container">
-
-<ul id="daftar-tugas">
-</ul>
-
-<p id="pesan-kosong">
-Belum ada tugas hari ini
-</p>
-
+<div class="stats">
+<div>Total Tugas <strong id="total">0</strong></div>
+<div>Selesai <strong id="selesai">0</strong></div>
+<div>Belum Selesai <strong id="belum">0</strong></div>
 </div>
 
-
-<div class="counter">
-
-<span>Total tugas:</span>
-
-<strong id="jumlah-tugas">0</strong>
-
 </div>
-
-</main>
-
 </div>
-
-
-<div class="lace lace-bottom"></div>
 
 <script src="app.js"></script>
-
 </body>
 </html>
