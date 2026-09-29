@@ -1,0 +1,275 @@
+
+:root {
+    --bg: #3f1b19;        /* cokelat tua kemerahan */
+    --star: #b3c3f5;      /* biru periwinkle */
+    --card: #b9c6f2;
+    --btn: #3a1713;
+    --btn-text: #eef2ff;
+    --ink: #2b1512;
+    --ink-soft: #5a4642;
+
+    /* turunan otomatis dari warna kartu */
+    --field: color-mix(in srgb, var(--card), white 40%);
+    --field-hover: color-mix(in srgb, var(--card), white 55%);
+    --done: color-mix(in srgb, var(--card), black 12%);
+    --line: color-mix(in srgb, var(--card), black 40%);
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    font-family: "Poppins", sans-serif;
+    color: var(--ink);
+    background-color: var(--bg);
+    overflow-x: hidden;
+
+    /* Polka bintang 12 sudut, tersusun selang-seling */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Cg fill='%23b3c3f5'%3E%3Cpolygon transform='translate(18,18)' points='10,0 6.28,1.68 8.66,5 4.6,4.6 5,8.66 1.68,6.28 0,10 -1.68,6.28 -5,8.66 -4.6,4.6 -8.66,5 -6.28,1.68 -10,0 -6.28,-1.68 -8.66,-5 -4.6,-4.6 -5,-8.66 -1.68,-6.28 0,-10 1.68,-6.28 5,-8.66 4.6,-4.6 8.66,-5 6.28,-1.68'/%3E%3Cpolygon transform='translate(54,54)' points='10,0 6.28,1.68 8.66,5 4.6,4.6 5,8.66 1.68,6.28 0,10 -1.68,6.28 -5,8.66 -4.6,4.6 -8.66,5 -6.28,1.68 -10,0 -6.28,-1.68 -8.66,-5 -4.6,-4.6 -5,-8.66 -1.68,-6.28 0,-10 1.68,-6.28 5,-8.66 4.6,-4.6 8.66,-5 6.28,-1.68'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 72px 72px;
+}
+
+
+.lace {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    height: 14px;
+    background: var(--star);
+    z-index: 1;
+}
+
+.lace-top    { top: 0; }
+.lace-bottom { bottom: 0; }
+
+/* ================================
+   CONTAINER & HEADER
+================================ */
+.container {
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    z-index: 2;
+}
+
+.main-header {
+    text-align: left;
+    margin-bottom: 28px;
+}
+
+.sticker {
+    display: inline-block;
+    padding: 4px 14px;
+    margin-bottom: 12px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--star);
+    border: 1px solid var(--star);
+    border-radius: 2px;
+}
+
+.main-header h1 {
+    font-family: "DM Serif Display", serif;
+    font-size: 42px;
+    font-weight: 400;
+    color: var(--star);
+    margin-bottom: 5px;
+}
+
+.main-header p {
+    font-size: 12px;
+    color: #a3aed6;
+}
+
+/* ================================
+   KARTU TODO
+================================ */
+.todo-card {
+    position: relative;
+    padding: 30px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: background 0.4s;
+}
+
+/* bingkai dalam */
+.todo-card::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 1px solid rgba(43, 21, 18, 0.25);
+    pointer-events: none;
+}
+
+.input-wrapper,
+.list-container,
+.counter {
+    position: relative;
+    z-index: 2;
+}
+
+/* ================================
+   INPUT & TOMBOL TAMBAH
+================================ */
+.input-wrapper {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 22px;
+}
+
+#input-tugas {
+    flex: 1;
+    height: 42px;
+    padding: 0 13px;
+    font: 12px "Poppins", sans-serif;
+    color: var(--ink);
+    background: var(--field);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    outline: none;
+    cursor: text;
+    transition: background 0.4s;
+}
+
+#input-tugas::placeholder { color: var(--ink-soft); }
+
+#input-tugas:focus {
+    border-color: var(--btn);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--btn), transparent 75%);
+}
+
+.btn-tambah {
+    padding: 0 18px;
+    font: 600 11px "Poppins", sans-serif;
+    color: var(--btn-text);
+    background: var(--btn);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.4s, filter 0.2s;
+}
+
+.btn-tambah:hover { filter: brightness(1.25); }
+
+/* ================================
+   DAFTAR TUGAS
+================================ */
+.list-container { min-height: 100px; }
+
+#daftar-tugas {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--field);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    transition: background 0.4s;
+}
+
+.todo-item:hover { background: var(--field-hover); }
+
+.task-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    cursor: pointer;
+}
+
+.checkbox-tugas {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--btn);
+    cursor: pointer;
+}
+
+.teks-tugas {
+    font-size: 12px;
+    word-break: break-word;
+}
+
+.todo-item.selesai {
+    background: var(--done);
+    opacity: 0.8;
+}
+
+.todo-item.selesai .teks-tugas {
+    text-decoration: line-through;
+    color: var(--ink-soft);
+}
+
+/* ================================
+   TOMBOL HAPUS
+================================ */
+.btn-hapus {
+    padding: 2px 5px;
+    font-size: 18px;
+    line-height: 1;
+    color: var(--ink-soft);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.btn-hapus:hover { color: var(--ink); }
+
+/* ================================
+   PESAN KOSONG, COUNTER, UTILITAS
+================================ */
+#pesan-kosong {
+    padding: 20px 0;
+    text-align: left;
+    font-size: 11px;
+    color: var(--ink-soft);
+}
+
+.counter {
+    margin-top: 18px;
+    padding-top: 13px;
+    text-align: left;
+    font-size: 10px;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--line);
+}
+
+.counter strong {
+    margin-left: 4px;
+    font-size: 13px;
+    color: var(--ink);
+}
+
+.hidden { display: none; }
+
+/* ================================
+   RESPONSIF
+================================ */
+@media (max-width: 500px) {
+    body { padding: 50px 15px; }
+    .todo-card { padding: 25px 20px; }
+    .main-header h1 { font-size: 34px; }
+    .input-wrapper { flex-direction: column; }
+    .btn-tambah { height: 40px; }
+}
